@@ -427,22 +427,23 @@ public class CompletionProposalReplacementProvider {
 
 		// we're inserting a method plus the argument list - respect formatter preferences
 		appendMethodNameReplacement(buffer, proposal);
-		final boolean addParen  = client.isCompletionSnippetsSupported();
-		if(addParen) {
-			buffer.append(LPAREN);
-		}
+		//		final boolean addParen  = client.isCompletionSnippetsSupported();
+		//		if(addParen) {
+		//			buffer.append(LPAREN);
+		//		}
 
-		if (hasParameters(proposal)) {
-			appendGuessingCompletion(buffer, proposal);
-		}
+		// TODO Frederik
+		//		if (hasParameters(proposal)) {
+		//			appendGuessingCompletion(buffer, proposal);
+		//		}
 
-		if(addParen){
-			buffer.append(RPAREN);
-			// add semicolons only if there are parentheses
-			if (canAutomaticallyAppendSemicolon(proposal)) {
-				buffer.append(SEMICOLON);
-			}
-		}
+		//		if(addParen){
+		//			buffer.append(RPAREN);
+		//			// add semicolons only if there are parentheses
+		//			if (canAutomaticallyAppendSemicolon(proposal)) {
+		//				buffer.append(SEMICOLON);
+		//			}
+		//		}
 		if(proposal.getKind() == CompletionProposal.METHOD_DECLARATION){
 			appendBody(buffer);
 		}

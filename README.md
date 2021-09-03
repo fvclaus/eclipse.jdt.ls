@@ -1,5 +1,7 @@
 [![Build Status](https://ci.eclipse.org/ls/buildStatus/icon?job=jdt-ls-master)](https://ci.eclipse.org/ls/job/jdt-ls-master)
 
+Copy to /home/dev/.vscode/extensions/redhat.java-0.81.0/server/plugins
+
 Eclipse JDT Language Server
 ===========================
 
