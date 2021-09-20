@@ -427,8 +427,8 @@ public class CompletionProposalReplacementProvider {
 
 		// we're inserting a method plus the argument list - respect formatter preferences
 		appendMethodNameReplacement(buffer, proposal);
-		final boolean addParen = client.isCompletionSnippetsSupported();
-		if (addParen) {
+		final boolean addParen  = client.isCompletionSnippetsSupported();
+		if(addParen) {
 			buffer.append(LPAREN);
 		}
 
@@ -436,7 +436,7 @@ public class CompletionProposalReplacementProvider {
 			appendGuessingCompletion(buffer, proposal);
 		}
 
-		if (addParen) {
+		if(addParen){
 			buffer.append(RPAREN);
 			// add semicolons only if there are parentheses
 			if (canAutomaticallyAppendSemicolon(proposal)) {
