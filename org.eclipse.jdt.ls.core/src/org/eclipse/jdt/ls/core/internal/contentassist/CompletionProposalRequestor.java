@@ -15,7 +15,6 @@ package org.eclipse.jdt.ls.core.internal.contentassist;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,10 +33,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.Signature;
-import org.eclipse.jdt.internal.codeassist.InternalCompletionContext;
-import org.eclipse.jdt.internal.codeassist.complete.CompletionOnMessageSend;
-import org.eclipse.jdt.internal.codeassist.complete.CompletionOnQualifiedAllocationExpression;
-import org.eclipse.jdt.internal.compiler.ast.ASTNode;
 import org.eclipse.jdt.ls.core.internal.JDTUtils;
 import org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin;
 import org.eclipse.jdt.ls.core.internal.handlers.CompletionResolveHandler;
@@ -174,16 +169,6 @@ public final class CompletionProposalRequestor extends CompletionRequestor {
 			return;
 		}
 		if (!isIgnored(proposal.getKind())) {
-			if (context instanceof InternalCompletionContext) {
-				JavaLanguageServerPlugin.logInfo("Proposal on token " + new String(context.getToken()));
-				JavaLanguageServerPlugin.logInfo("Proposal on offset" + context.getOffset() + " end " + context.getTokenEnd());
-				ASTNode completionNode = ((InternalCompletionContext) context).getCompletionNode();
-				if (completionNode instanceof CompletionOnQualifiedAllocationExpression || completionNode instanceof CompletionOnMessageSend) {
-					JavaLanguageServerPlugin.logInfo("Ignoring proposal on " + completionNode.getClass().getSimpleName());
-					return;
-				}
-				JavaLanguageServerPlugin.logInfo("Not ignoring proposal on " + completionNode.getClass().getSimpleName());
-			}
 			if (proposal.getKind() == CompletionProposal.POTENTIAL_METHOD_DECLARATION) {
 				acceptPotentialMethodDeclaration(proposal);
 			} else {
@@ -212,17 +197,12 @@ public final class CompletionProposalRequestor extends CompletionRequestor {
 		}
 		CompletionResponses.store(response);
 
-		Set<String> displayText = new HashSet<>();
-
 		//Let's compute replacement texts for the most relevant results only
 		for (int i = 0; i < limit; i++) {
 			CompletionProposal proposal = proposals.get(i);
 			try {
 				CompletionItem item = toCompletionItem(proposal, i);
-				if (!displayText.contains(item.getLabel())) {
-					displayText.add(item.getLabel());
-					completionItems.add(item);
-				}
+				completionItems.add(item);
 			} catch (Exception e) {
 				JavaLanguageServerPlugin.logException(e.getMessage(), e);
 			}
