@@ -77,10 +77,9 @@ public class CompletionProposalDescriptionProvider {
 				description.append(proposal.getName());
 
 				// parameters
-				// TODO Frederik
-				//				description.append('(');
-				//				appendUnboundedParameterList(description, proposal);
-				//				description.append(')');
+				description.append('(');
+				appendUnboundedParameterList(description, proposal);
+				description.append(')');
 
 				// return type
 				if (!proposal.isConstructor()) {
