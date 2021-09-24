@@ -214,8 +214,6 @@ public final class CompletionProposalRequestor extends CompletionRequestor {
 
 	public CompletionItem toCompletionItem(CompletionProposal proposal, int index) {
 		final CompletionItem $ = new CompletionItem();
-
-
 		$.setKind(mapKind(proposal));
 		if (Flags.isDeprecated(proposal.getFlags())) {
 			if (preferenceManager.getClientPreferences().isCompletionItemTagSupported()) {
